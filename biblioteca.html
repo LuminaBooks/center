@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minha Biblioteca | Lumina Books</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #0e0e0e;
+      color: #f5f5f5;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      font-size: 0.7rem;
+      opacity: 0.6;
+      letter-spacing: 3px;
+    }
+
+    .user {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-weight: normal;
+      letter-spacing: 1px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .book {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 16px;
+      transition: 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book:hover {
+      transform: translateY(-6px);
+      border-color: #444;
+    }
+
+    .book h3 {
+      font-size: 0.95rem;
+      margin: 0 0 12px 0;
+    }
+
+    .book p {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      flex-grow: 1;
+    }
+
+    .book a {
+      margin-top: 16px;
+      text-decoration: none;
+      text-align: center;
+      background: #f5f5f5;
+      color: #000;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.7rem;
+      text-align: center;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>LUMINA</h1>
+    <span>BOOKS</span>
+  </div>
+  <div class="user" id="usuario"></div>
+</header>
+
+<h2>Minha biblioteca</h2>
+
+<div class="grid" id="lista"></div>
+
+<footer>
+  © Lumina Books • Acesso pessoal e intransferível
+</footer>
+
+<script>
+  const usuario = JSON.parse(localStorage.getItem("lumina_usuario"));
+
+  if (!usuario) {
+    window.location.href = "index.html";
+  }
+
+  document.getElementById("usuario").innerText =
+    "Acesso: " + usuario.email;
+
+  const catalogo = {
+    "low-carb-ovos": {
+      titulo: "Low Carb — Ovos",
+      descricao: "60 receitas práticas e acessíveis para o dia a dia.",
+      link: "ebooks/low-carb-ovos/index.html"
+    },
+    "cafe-da-manha-low-carb": {
+      titulo: "Café da Manhã Low Carb",
+      descricao: "Ideias simples para começar o dia sem carboidratos.",
+      link: "ebooks/cafe-da-manha-low-carb/index.html"
+    }
+  };
+
+  const lista = document.getElementById("lista");
+
+  usuario.ebooks.forEach(id => {
+    if (catalogo[id]) {
+      const div = document.createElement("div");
+      div.className = "book";
+      div.innerHTML = `
+        <h3>${catalogo[id].titulo}</h3>
+        <p>${catalogo[id].descricao}</p>
+        <a href="${catalogo[id].link}">Ler agora</a>
+      `;
+      lista.appendChild(div);
+    }
+  });
+
+  if (usuario.ebooks.length === 0) {
+    lista.innerHTML =
+      "<p>Você ainda não possui ebooks liberados.</p>";
+  }
+</script>
+
+</body>
+</html>
