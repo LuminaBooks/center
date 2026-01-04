@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licença Oficial | Lumina Book</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0F0F1E 0%, #1A1A2E 100%);
+            color: #F5F5F0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            border: 3px solid #C9A86A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            background: rgba(201, 168, 106, 0.1);
+        }
+
+        .logo-icon svg {
+            transform: rotate(-45deg);
+            width: 24px;
+            height: 24px;
+            stroke: #C9A86A;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #E8DCC4;
+            letter-spacing: 0.1em;
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: #C9A86A;
+            font-weight: 500;
+        }
+
+        .btn-back {
+            padding: 0.7rem 1.8rem;
+            background: rgba(201, 168, 106, 0.1);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            color: #C9A86A;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: rgba(201, 168, 106, 0.2);
+            border-color: #C9A86A;
+            transform: translateX(-3px);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #E8DCC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #E8DCC4;
+            opacity: 0.8;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #C9A86A;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .intro-text {
+            font-size: 1.15rem;
+            color: #E8DCC4;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(201, 168, 106, 0.05);
+            border-left: 4px solid #C9A86A;
+            border-radius: 8px;
+        }
+
+        .intro-text strong {
+            color: #C9A86A;
+        }
+
+        .license-text {
+            font-size: 1.05rem;
+            color: #E8DCC4;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+        }
+
+        .license-text strong {
+            color: #C9A86A;
+            font-weight: 600;
+        }
+
+        .prohibited-section {
+            background: rgba(255, 107, 107, 0.05);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .prohibited-title {
+            font-size: 1.4rem;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .prohibited-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .prohibited-list li {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 107, 107, 0.05);
+            border-left: 3px solid #ff6b6b;
+            border-radius: 8px;
+            color: #E8DCC4;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .prohibited-list li::before {
+            content: "⚠️";
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(201, 168, 106, 0.1) 0%, rgba(201, 168, 106, 0.05) 100%);
+            border: 2px solid #C9A86A;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .warning-title {
+            font-size: 1.3rem;
+            color: #C9A86A;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .warning-text {
+            color: #E8DCC4;
+            line-height: 1.8;
+        }
+
+        .legal-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .legal-title {
+            font-size: 1.2rem;
+            color: #C9A86A;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .legal-text {
+            color: #E8DCC4;
+            opacity: 0.9;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: rgba(76, 175, 80, 0.05);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            color: #E8DCC4;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        footer {
+            background: rgba(15, 15, 30, 0.8);
+            border-top: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: #E8DCC4;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .content-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .intro-text {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+
+            main {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-name">LUMINA</div>
+                    <div class="logo-subtitle">BOOKS</div>
+                </div>
+            </div>
+            <a href="biblioteca.html" class="btn-back">← Voltar à Biblioteca</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="page-icon">📜</div>
+            <h1 class="page-title">Licença Oficial</h1>
+            <p class="page-subtitle">Termos de Uso dos eBooks Lumina Book</p>
+        </div>
+
+        <div class="content-card">
+            <h2 class="section-title">📋 Licença de Uso</h2>
+            
+            <div class="intro-text">
+                <strong>IMPORTANTE:</strong> Os ebooks comercializados pela Lumina Book são <strong>licenciados, não vendidos</strong>.
+            </div>
+
+            <p class="license-text">
+                Ao adquirir um ebook da Lumina Book, o comprador recebe uma <strong>licença de uso pessoal, individual, intransferível e não exclusiva</strong>, válida apenas para uso próprio.
+            </p>
+
+            <div class="highlight-box">
+                <p>
+                    Você tem o direito de ler, estudar e aplicar o conteúdo adquirido em seu desenvolvimento pessoal, mantendo o acesso permanente ao material enquanto respeitar os termos desta licença.
+                </p>
+            </div>
+
+            <div class="prohibited-section">
+                <h3 class="prohibited-title">🚫 É Expressamente Proibido</h3>
+                <ul class="prohibited-list">
+                    <li>
+                        <div>
+                            <strong>Compartilhar, revender, alugar ou redistribuir</strong> o conteúdo, total ou parcialmente, por qualquer meio ou plataforma.
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Disponibilizar o material</strong> em grupos, sites, plataformas de compartilhamento, redes sociais ou qualquer ambiente público ou privado de distribuição de conteúdo.
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Utilizar o conteúdo para fins comerciais</strong>, treinamentos, cursos, produtos derivados ou qualquer atividade que gere lucro direto ou indireto.
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Remover avisos de direitos autorais</strong>, marca d'água, identificação do comprador ou quaisquer elementos de proteção do conteúdo.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h3 class="warning-title">🔐 Identificação Individual</h3>
+                <p class="warning-text">
+                    Cada exemplar pode conter <strong>identificação individual do comprador</strong>, como nome, e-mail ou código de licença. Esta identificação é utilizada <strong>exclusivamente para proteção do conteúdo e prevenção de uso indevido</strong>, garantindo a segurança tanto do autor quanto dos compradores legítimos.
+                </p>
+            </div>
+
+            <div class="legal-box">
+                <h3 class="legal-title">⚖️ Proteção Legal</h3>
+                <p class="legal-text">
+                    Este material é protegido pela <strong>Lei nº 9.610/1998 (Lei de Direitos Autorais)</strong> e demais legislações aplicáveis no território brasileiro e internacional.
+                </p>
+                <p class="legal-text" style="margin-top: 1rem;">
+                    <strong>A violação desta licença pode resultar em:</strong>
+                </p>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: #E8DCC4; opacity: 0.9;">
+                    <li>Revogação imediata do acesso ao conteúdo adquirido;</li>
+                    <li>Bloqueio permanente de futuras compras;</li>
+                    <li>Medidas legais cabíveis, incluindo ações cíveis e criminais;</li>
+                    <li>Indenização por danos materiais e morais;</li>
+                    <li>Responsabilização de acordo com a legislação vigente.</li>
+                </ul>
+            </div>
+
+            <div class="warning-box" style="margin-top: 2rem;">
+                <h3 class="warning-title">💡 Dúvidas?</h3>
+                <p class="warning-text">
+                    Em caso de dúvidas sobre o uso permitido do conteúdo ou questões relacionadas à sua licença, entre em contato com nosso suporte através do email: <strong>suporte.luminabooks@outlook.com</strong>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <div class="logo-name">LUMINA</div>
+                <div class="logo-subtitle">BOOKS</div>
+            </div>
+        </div>
+        <p>&copy; 2026 Lumina Book. Todos os direitos reservados.</p>
+        <p style="margin-top: 0.5rem;">Protegido pela Lei nº 9.610/1998</p>
+    </footer>
+
+    <script>
+        // Animação de entrada suave
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.content-card, .page-header').forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
