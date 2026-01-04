@@ -105,6 +105,33 @@
       text-align: center;
       opacity: 0.4;
     }
+
+     .logo-icon svg {
+            transform: rotate(-45deg);
+            width: 45px;
+            height: 45px;
+            stroke: #C9A86A;
+            fill: none;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #E8DCC4;
+            letter-spacing: 0.1em;
+        }
+
+        .logo-subtitle {
+            font-size: 1.3rem;
+            letter-spacing: 0.25em;
+            color: #C9A86A;
+            font-weight: 500;
+        }
   </style>
 </head>
 <body>
@@ -112,9 +139,17 @@
   <div class="card">
 
     <div class="logo">
-      <h1>LUMINA</h1>
-      <span>BOOKS</span>
-    </div>
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-name">LUMINA</div>
+                    <div class="logo-subtitle">BOOKS</div>
+                </div>
+            </div>
 
     <h2>Acesso exclusivo ao livro digital</h2>
     <p>Informe o e-mail utilizado na compra para liberar sua experiência de leitura.</p>
@@ -169,5 +204,6 @@
 
 </body>
 </html>
+
 
 
