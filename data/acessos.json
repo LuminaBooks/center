@@ -1,1 +1,12 @@
-
+{
+  "usuarios": [
+    {
+      "email": "teste@email.com",
+      "ebooks": ["low-carb-ovos", "cafe-da-manha-low-carb"]
+    },
+    {
+      "email": "cliente@outlook.com",
+      "ebooks": ["low-carb-ovos"]
+    }
+  ]
+}
