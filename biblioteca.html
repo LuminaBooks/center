@@ -97,6 +97,41 @@
             opacity: 0.8;
         }
 
+        .menu-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .menu-nav a {
+            color: #E8DCC4;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .menu-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #C9A86A;
+            transition: width 0.3s ease;
+        }
+
+        .menu-nav a:hover {
+            color: #C9A86A;
+            opacity: 1;
+        }
+
+        .menu-nav a:hover::after {
+            width: 100%;
+        }
+
         .btn-logout {
             padding: 0.6rem 1.5rem;
             background: rgba(201, 168, 106, 0.1);
@@ -112,6 +147,73 @@
         .btn-logout:hover {
             background: rgba(201, 168, 106, 0.2);
             border-color: #C9A86A;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #C9A86A;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 1.5rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: #E8DCC4;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(201, 168, 106, 0.1);
+            color: #C9A86A;
+        }
+
+        .mobile-menu .user-email {
+            padding: 0.8rem;
+            background: rgba(201, 168, 106, 0.05);
+            border-radius: 8px;
+            font-size: 0.85rem;
         }
 
         main {
@@ -391,6 +493,24 @@
             .stats-bar {
                 grid-template-columns: 1fr;
             }
+
+            .menu-nav {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+                flex-direction: row;
+            }
+
+            .user-email {
+                display: none;
+            }
         }
 
         .badge-new {
@@ -423,10 +543,26 @@
                 </div>
             </div>
             <div class="user-info">
+                <div class="menu-nav">
+                    <a href="licenca.html">📜 Licença Oficial</a>
+                    <a href="sobre.html">ℹ️ Sobre</a>
+                    <a href="termos.html">📋 Termos de Uso</a>
+                </div>
                 <div class="user-email" id="userEmail"></div>
+                <div class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <a href="#" class="btn-logout" id="btnLogout">Sair</a>
             </div>
         </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="user-email" id="userEmailMobile"></div>
+            <a href="licenca.html">📜 Licença Oficial Lumina Book</a>
+            <a href="sobre.html">ℹ️ Sobre a Lumina Book</a>
+            <a href="termos.html">📋 Termos de Uso & Licença</a>
+        </div>
     </header>
 
     <main>
@@ -462,7 +598,7 @@
                 <div class="empty-icon">📚</div>
                 <h3 class="empty-title">Sua biblioteca está vazia</h3>
                 <p class="empty-text">Comece sua jornada de conhecimento adquirindo seu primeiro eBook premium.</p>
-                <a href="https://luminabooks.github.io/LP/" class="btn-browse">Explorar Catálogo</a>
+                <a href="index.html" class="btn-browse">Explorar Catálogo</a>
             </div>
         </div>
     </main>
@@ -494,9 +630,35 @@
 
         // Configurar informações do usuário
         document.getElementById("userEmail").innerText = usuario.email;
+        document.getElementById("userEmailMobile").innerText = usuario.email;
         
         const firstName = usuario.email.split('@')[0];
         document.getElementById("welcomeTitle").innerText = `Bem-vindo de volta, ${firstName}!`;
+
+        // Menu toggle mobile
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        menuToggle.addEventListener("click", () => {
+            menuToggle.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+        });
+
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove("active");
+                mobileMenu.classList.remove("active");
+            });
+        });
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+                menuToggle.classList.remove("active");
+                mobileMenu.classList.remove("active");
+            }
+        });
 
         // Logout
         document.getElementById("btnLogout").addEventListener("click", (e) => {
@@ -591,4 +753,3 @@
     </script>
 </body>
 </html>
-
