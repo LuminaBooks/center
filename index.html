@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Acesso ao Livro Digital | Lumina Books</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      letter-spacing: 3px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      text-align: center;
+      font-weight: normal;
+    }
+
+    p {
+      font-size: 0.9rem;
+      text-align: center;
+      opacity: 0.8;
+      margin-bottom: 24px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #000;
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    input::placeholder {
+      color: #777;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
+      background: #f5f5f5;
+      color: #000;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    #msg {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 0.7rem;
+      text-align: center;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="logo">
+      <h1>LUMINA</h1>
+      <span>BOOKS</span>
+    </div>
+
+    <h2>Acesso exclusivo ao livro digital</h2>
+    <p>Informe o e-mail utilizado na compra para liberar sua experiência de leitura.</p>
+
+    <input type="email" id="email" placeholder="seu@email.com">
+    <button onclick="verificar()">Acessar livro</button>
+
+    <div id="msg"></div>
+
+    <footer>
+      © Lumina Books • Leitura digital licenciada
+    </footer>
+  </div>
+
+  <script>
+  async function verificar() {
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const msg = document.getElementById("msg");
+
+    if (!email) {
+      msg.innerText = "Informe seu e-mail.";
+      msg.style.color = "#ffb4b4";
+      return;
+    }
+
+    msg.innerText = "Verificando acesso...";
+    msg.style.color = "#ccc";
+
+    try {
+      const res = await fetch("data/acessos.json", { cache: "no-store" });
+      const data = await res.json();
+
+      const usuario = data.usuarios.find(
+        u => u.email.toLowerCase() === email
+      );
+
+      if (usuario) {
+        localStorage.setItem("lumina_usuario", JSON.stringify(usuario));
+        window.location.href = "biblioteca.html";
+      } else {
+        msg.innerText = "E-mail não encontrado. Use o e-mail da compra.";
+        msg.style.color = "#ff9b9b";
+      }
+
+    } catch (e) {
+      console.error(e);
+      msg.innerText = "Erro ao validar acesso.";
+      msg.style.color = "#ff9b9b";
+    }
+  }
+</script>
+
+</body>
+</html>
