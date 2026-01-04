@@ -1,10 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>60 Receitas Low Carb com Ovo | Lumina Books</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===== TURN.JS + JQUERY ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 
 <style>
 /* ===== RESET ===== */
@@ -44,7 +47,6 @@ header {
 
 .logo-icon span {
   transform: rotate(-45deg);
-  font-size: 1.2rem;
   color: #C9A86A;
 }
 
@@ -65,29 +67,22 @@ header {
 }
 
 /* ===== LEITOR ===== */
-.reader-container {
+.reader {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 3rem 1rem;
 }
 
-.book {
+#book {
   width: 900px;
   height: 520px;
-  position: relative;
-  perspective: 2000px;
 }
 
 .page {
-  width: 50%;
-  height: 100%;
   background: #1A1A2E;
   border: 1px solid rgba(201,168,106,.25);
   padding: 2rem;
-  position: absolute;
-  top: 0;
-  overflow-y: auto;
 }
 
 .page h2 {
@@ -99,21 +94,6 @@ header {
   line-height: 1.6;
   margin-bottom: 1rem;
   opacity: .9;
-}
-
-.page.left {
-  left: 0;
-  border-right: none;
-}
-
-.page.right {
-  right: 0;
-  transform-origin: left;
-  transition: transform .8s ease;
-}
-
-.page.flip {
-  transform: rotateY(-180deg);
 }
 
 /* ===== CONTROLES ===== */
@@ -139,18 +119,9 @@ header {
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  .book {
+  #book {
     width: 100%;
-    height: auto;
-  }
-
-  .page {
-    width: 100%;
-    position: relative;
-  }
-
-  .page.left {
-    display: none;
+    height: 460px;
   }
 }
 </style>
@@ -168,16 +139,44 @@ header {
   </div>
 </header>
 
-<main class="reader-container">
+<main class="reader">
 
-  <div class="book">
-    <div class="page left" id="pageLeft"></div>
-    <div class="page right" id="pageRight"></div>
+  <div id="book">
+    <div class="page">
+      <h2>Introdução</h2>
+      <p>Bem-vindo ao <strong>60 Receitas Low Carb com Ovo</strong>.</p>
+      <p>Este livro foi criado para quem busca praticidade, proteína e sabor.</p>
+    </div>
+
+    <div class="page">
+      <h2>Capítulo 1</h2>
+      <p><strong>Ovo Mexido Proteico</strong></p>
+      <p>Ingredientes: ovos, manteiga, sal.</p>
+      <p>Modo de preparo: fogo baixo, mexa lentamente.</p>
+    </div>
+
+    <div class="page">
+      <h2>Capítulo 2</h2>
+      <p><strong>Omelete Low Carb</strong></p>
+      <p>Ingredientes: ovos, queijo, ervas.</p>
+    </div>
+
+    <div class="page">
+      <h2>Capítulo 3</h2>
+      <p><strong>Ovo com Legumes</strong></p>
+      <p>Uma opção nutritiva e rápida.</p>
+    </div>
+
+    <div class="page">
+      <h2>Encerramento</h2>
+      <p>Obrigado por confiar na Lumina Books.</p>
+      <p>Conhecimento que ilumina.</p>
+    </div>
   </div>
 
   <div class="controls">
-    <button onclick="anterior()">◀ Anterior</button>
-    <button onclick="proxima()">Próxima ▶</button>
+    <button onclick="$('#book').turn('previous')">◀ Anterior</button>
+    <button onclick="$('#book').turn('next')">Próxima ▶</button>
   </div>
 
 </main>
@@ -187,63 +186,18 @@ header {
 const usuario = JSON.parse(localStorage.getItem("lumina_usuario"));
 
 if (!usuario || !usuario.ebooks || !usuario.ebooks.includes("low-carb-ovos")) {
-  alert("Acesso restrito. Faça login novamente.");
+  alert("Acesso restrito. Faça login.");
   window.location.href = "../../index.html";
 }
 
-/* ===== CONTEÚDO DO LIVRO ===== */
-const paginas = [
-  `<h2>Introdução</h2>
-   <p>Bem-vindo ao <strong>60 Receitas Low Carb com Ovo</strong>.</p>
-   <p>Este livro foi criado para quem busca praticidade, proteína e sabor no dia a dia.</p>`,
-
-  `<h2>Capítulo 1</h2>
-   <p><strong>Ovo Mexido Proteico</strong></p>
-   <p>Ingredientes: ovos, manteiga, sal.</p>
-   <p>Modo de preparo: fogo baixo, mexa lentamente.</p>`,
-
-  `<h2>Capítulo 2</h2>
-   <p><strong>Omelete Low Carb</strong></p>
-   <p>Ingredientes: ovos, queijo, ervas.</p>`,
-
-  `<h2>Capítulo 3</h2>
-   <p><strong>Ovo com Legumes</strong></p>
-   <p>Uma opção nutritiva e rápida.</p>`,
-
-  `<h2>Encerramento</h2>
-   <p>Obrigado por confiar na Lumina Books.</p>
-   <p>Conhecimento que ilumina.</p>`
-];
-
-/* ===== CONTROLE DE PÁGINAS ===== */
-let paginaAtual = 0;
-const left = document.getElementById("pageLeft");
-const right = document.getElementById("pageRight");
-
-function render() {
-  left.innerHTML = paginas[paginaAtual] || "";
-  right.innerHTML = paginas[paginaAtual + 1] || "";
-}
-
-function proxima() {
-  if (paginaAtual + 2 < paginas.length) {
-    right.classList.add("flip");
-    setTimeout(() => {
-      paginaAtual += 2;
-      right.classList.remove("flip");
-      render();
-    }, 800);
-  }
-}
-
-function anterior() {
-  if (paginaAtual - 2 >= 0) {
-    paginaAtual -= 2;
-    render();
-  }
-}
-
-render();
+/* ===== TURN.JS INIT ===== */
+$('#book').turn({
+  width: 900,
+  height: 520,
+  autoCenter: true,
+  gradients: true,
+  acceleration: true
+});
 </script>
 
 </body>
