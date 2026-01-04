@@ -1,161 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<title>Minha Biblioteca | Lumina Books</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Biblioteca | Lumina Book</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-:root {
-  --bg: #0b0b0b;
-  --card: #141414;
-  --text: #f5f5f5;
-  --muted: #9a9a9a;
-  --accent: #ffffff;
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0F0F1E 0%, #1A1A2E 100%);
+            color: #F5F5F0;
+            min-height: 100vh;
+        }
 
-* {
-  box-sizing: border-box;
-}
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-/* HEADER */
-header {
-  position: sticky;
-  top: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
-  padding: 16px 32px;
-  z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-.logo {
-  font-weight: 600;
-  letter-spacing: 3px;
-}
-
-.logo span {
-  font-size: 0.6rem;
-  opacity: 0.6;
-}
-
-.user {
-  font-size: 0.75rem;
-  opacity: 0.7;
-}
-
-/* CONTAINER */
-main {
-  padding: 32px;
-}
-
-.section-title {
-  font-size: 1rem;
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-}
-
-/* ROW */
-.row {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  padding-bottom: 16px;
-}
-
-.row::-webkit-scrollbar {
-  height: 6px;
-}
-
-.row::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 10px;
-}
-
-/* BOOK CARD */
-.book {
-  min-width: 180px;
-  background: var(--card);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform .25s ease;
-  cursor: pointer;
-  position: relative;
-}
-
-.book:hover {
-  transform: scale(1.12);
-  z-index: 5;
-}
-
-.book img {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  display: block;
-}
-
-.book-info {
-  padding: 12px;
-}
-
-.book-info h3 {
-  font-size: 0.85rem;
-  margin: 0 0 6px;
-}
-
-.book-info p {
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin: 0;
-}
-
-/* OVERLAY */
-.book:hover .overlay {
-  opacity: 1;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: .25s ease;
-}
-
-.overlay a {
-  background: var(--accent);
-  color: #000;
-  padding: 10px 18px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  text-decoration: none;
-}
-
-footer {
-  text-align: center;
-  font-size: 0.65rem;
-  opacity: 0.4;
-  margin: 40px 0 20px;
-}
-
-  .logo-icon svg {
-            transform: rotate(-45deg);
+        .logo-icon {
             width: 45px;
             height: 45px;
+            border: 3px solid #C9A86A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            background: rgba(201, 168, 106, 0.1);
+        }
+
+        .logo-icon svg {
+            transform: rotate(-45deg);
+            width: 24px;
+            height: 24px;
             stroke: #C9A86A;
             fill: none;
+            stroke-width: 2;
         }
 
         .logo-text {
@@ -164,86 +71,523 @@ footer {
         }
 
         .logo-name {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 300;
             color: #E8DCC4;
             letter-spacing: 0.1em;
+            line-height: 1;
         }
 
         .logo-subtitle {
-            font-size: 1.3rem;
+            font-size: 0.7rem;
             letter-spacing: 0.25em;
             color: #C9A86A;
             font-weight: 500;
         }
-</style>
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-email {
+            color: #E8DCC4;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .btn-logout {
+            padding: 0.6rem 1.5rem;
+            background: rgba(201, 168, 106, 0.1);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            color: #C9A86A;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            background: rgba(201, 168, 106, 0.2);
+            border-color: #C9A86A;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .welcome-section {
+            margin-bottom: 3rem;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #E8DCC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            color: #E8DCC4;
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #C9A86A;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-count {
+            background: rgba(201, 168, 106, 0.2);
+            color: #C9A86A;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            border-color: #C9A86A;
+            box-shadow: 0 12px 30px rgba(201, 168, 106, 0.3);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 320px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .book-card:hover .book-overlay {
+            opacity: 1;
+        }
+
+        .btn-read {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #B89858 100%);
+            color: #1A1A2E;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-read:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-download {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            color: #E8DCC4;
+            border: 1px solid rgba(201, 168, 106, 0.5);
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-download:hover {
+            background: rgba(201, 168, 106, 0.1);
+            border-color: #C9A86A;
+        }
+
+        .book-info {
+            padding: 1.5rem;
+        }
+
+        .book-title {
+            font-size: 1.2rem;
+            color: #E8DCC4;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .book-description {
+            color: #E8DCC4;
+            opacity: 0.7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .book-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: #C9A86A;
+        }
+
+        .book-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 16px;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: #C9A86A;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: #E8DCC4;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .btn-browse {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #B89858 100%);
+            color: #1A1A2E;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-browse:hover {
+            transform: translateY(-2px);
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #C9A86A;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #E8DCC4;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: rgba(15, 15, 30, 0.8);
+            border-top: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: #E8DCC4;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .book-cover {
+                height: 260px;
+            }
+
+            .user-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge-new {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #B89858 100%);
+            color: #1A1A2E;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+    </style>
 </head>
-
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-name">LUMINA</div>
+                    <div class="logo-subtitle">BOOK</div>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-email" id="userEmail"></div>
+                <a href="#" class="btn-logout" id="btnLogout">Sair</a>
+            </div>
+        </nav>
+    </header>
 
-<header>
- <<div class="logo">
-    LUMINA <span>BOOKS</span>
-  </div>
-  <div class="user" id="userEmail"></div>
-</header>
+    <main>
+        <div class="welcome-section">
+            <h1 class="welcome-title" id="welcomeTitle">Bem-vindo de volta!</h1>
+            <p class="welcome-subtitle">Continue sua jornada de conhecimento</p>
+        </div>
 
-<main>
-  <div class="section">
-    <div class="section-title">📚 Meus Ebooks</div>
-    <div class="row" id="rowEbooks"></div>
-  </div>
-</main>
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card">
+                <div class="stat-number" id="totalBooks">0</div>
+                <div class="stat-label">eBooks na Biblioteca</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalPages">0</div>
+                <div class="stat-label">Páginas de Conteúdo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="readingTime">0</div>
+                <div class="stat-label">Horas de Leitura</div>
+            </div>
+        </div>
 
-<footer>
-  © Lumina Books • Acesso pessoal e intransferível
-</footer>
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    📚 Minha Biblioteca
+                    <span class="section-count" id="bookCount">0</span>
+                </h2>
+            </div>
+            <div class="books-grid" id="booksGrid"></div>
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📚</div>
+                <h3 class="empty-title">Sua biblioteca está vazia</h3>
+                <p class="empty-text">Comece sua jornada de conhecimento adquirindo seu primeiro eBook premium.</p>
+                <a href="index.html" class="btn-browse">Explorar Catálogo</a>
+            </div>
+        </div>
+    </main>
 
-<script>
-const usuario = JSON.parse(localStorage.getItem("lumina_usuario"));
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <div class="logo-name">LUMINA</div>
+                <div class="logo-subtitle">BOOK</div>
+            </div>
+        </div>
+        <p>&copy; 2026 Lumina Book. Todos os direitos reservados.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Acesso pessoal e intransferível</p>
+    </footer>
 
-if (!usuario) {
-  window.location.href = "index.html";
-}
+    <script>
+        // Verificar autenticação
+        const usuario = JSON.parse(localStorage.getItem("lumina_usuario"));
 
-document.getElementById("userEmail").innerText = usuario.email;
+        if (!usuario) {
+            window.location.href = "index.html";
+        }
 
-const catalogo = {
-  "low-carb-ovos": {
-    titulo: "Low Carb — Ovos",
-    descricao: "60 receitas fáceis e rápidas.",
-    capa: "ebooks/low-carb-ovos/Capa Ebook Receitas Low Carb Verde.png",
-    link: "ebooks/low-carb-ovos/index.html"
-  }
-};
+        // Configurar informações do usuário
+        document.getElementById("userEmail").innerText = usuario.email;
+        
+        const firstName = usuario.email.split('@')[0];
+        document.getElementById("welcomeTitle").innerText = `Bem-vindo de volta, ${firstName}!`;
 
-const row = document.getElementById("rowEbooks");
+        // Logout
+        document.getElementById("btnLogout").addEventListener("click", (e) => {
+            e.preventDefault();
+            if (confirm("Deseja realmente sair?")) {
+                localStorage.removeItem("lumina_usuario");
+                window.location.href = "index.html";
+            }
+        });
 
-usuario.ebooks.forEach(id => {
-  if (!catalogo[id]) return;
+        // Catálogo de eBooks
+        const catalogo = {
+            "low-carb-ovos": {
+                titulo: "60 Receitas Low Carb com Ovo",
+                descricao: "60 receitas fáceis de fazer para quem treina e precisa de proteína no dia a dia.",
+                capa: "ebooks/low-carb-ovos/Capa Ebook Receitas Low Carb Verde.png",
+                link: "ebooks/low-carb-ovos/index.html",
+                paginas: 120,
+                tempo: 3,
+                novo: true
+            }
+        };
 
-  const livro = catalogo[id];
+        // Renderizar biblioteca
+        const booksGrid = document.getElementById("booksGrid");
+        const emptyState = document.getElementById("emptyState");
+        const bookCount = document.getElementById("bookCount");
 
-  const card = document.createElement("div");
-  card.className = "book";
+        if (!usuario.ebooks || usuario.ebooks.length === 0) {
+            booksGrid.style.display = "none";
+            emptyState.style.display = "block";
+            bookCount.textContent = "0";
+        } else {
+            let totalPages = 0;
+            let totalTime = 0;
 
-  card.innerHTML = `
-    <img src="${livro.capa}" alt="${livro.titulo}">
-    <div class="overlay">
-      <a href="${livro.link}">Ler agora</a>
-    </div>
-    <div class="book-info">
-      <h3>${livro.titulo}</h3>
-      <p>${livro.descricao}</p>
-    </div>
-  `;
+            usuario.ebooks.forEach(id => {
+                if (!catalogo[id]) return;
 
-  row.appendChild(card);
-});
-</script>
+                const livro = catalogo[id];
+                totalPages += livro.paginas || 0;
+                totalTime += livro.tempo || 0;
 
+                const card = document.createElement("div");
+                card.className = "book-card";
+
+                card.innerHTML = `
+                    ${livro.novo ? '<div class="badge-new">NOVO</div>' : ''}
+                    <div class="book-cover">
+                        <img src="${livro.capa}" alt="${livro.titulo}" onerror="this.style.display='none'">
+                        <div class="book-overlay">
+                            <a href="${livro.link}" class="btn-read">📖 Ler Agora</a>
+                            <a href="${livro.capa}" download class="btn-download">⬇️ Download</a>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${livro.titulo}</h3>
+                        <p class="book-description">${livro.descricao}</p>
+                        <div class="book-meta">
+                            <span>📄 ${livro.paginas || 'N/A'} páginas</span>
+                            <span>⏱️ ${livro.tempo || 'N/A'}h leitura</span>
+                        </div>
+                    </div>
+                `;
+
+                booksGrid.appendChild(card);
+            });
+
+            // Atualizar estatísticas
+            document.getElementById("totalBooks").textContent = usuario.ebooks.length;
+            document.getElementById("totalPages").textContent = totalPages;
+            document.getElementById("readingTime").textContent = totalTime;
+            bookCount.textContent = usuario.ebooks.length;
+        }
+
+        // Animação de entrada
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.book-card, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
-
-
-
