@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre a Lumina Book | Quem Somos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0F0F1E 0%, #1A1A2E 100%);
+            color: #F5F5F0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            border: 3px solid #C9A86A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            background: rgba(201, 168, 106, 0.1);
+        }
+
+        .logo-icon svg {
+            transform: rotate(-45deg);
+            width: 24px;
+            height: 24px;
+            stroke: #C9A86A;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #E8DCC4;
+            letter-spacing: 0.1em;
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: #C9A86A;
+            font-weight: 500;
+        }
+
+        .btn-back {
+            padding: 0.7rem 1.8rem;
+            background: rgba(201, 168, 106, 0.1);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            color: #C9A86A;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: rgba(201, 168, 106, 0.2);
+            border-color: #C9A86A;
+            transform: translateX(-3px);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #E8DCC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: #E8DCC4;
+            opacity: 0.8;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(201, 168, 106, 0.15) 0%, rgba(201, 168, 106, 0.05) 100%);
+            border: 2px solid #C9A86A;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .hero-section h2 {
+            font-size: 2rem;
+            color: #C9A86A;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-text {
+            font-size: 1.15rem;
+            color: #E8DCC4;
+            line-height: 1.9;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .mission-statement {
+            font-size: 1.3rem;
+            color: #C9A86A;
+            font-weight: 600;
+            font-style: italic;
+            padding: 1.5rem;
+            background: rgba(201, 168, 106, 0.1);
+            border-left: 4px solid #C9A86A;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #C9A86A;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .value-card {
+            background: rgba(201, 168, 106, 0.05);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 12px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: #C9A86A;
+            background: rgba(201, 168, 106, 0.1);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-title {
+            font-size: 1.1rem;
+            color: #C9A86A;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-text {
+            font-size: 0.95rem;
+            color: #E8DCC4;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        .differentials-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .differential-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #C9A86A;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .differential-item:hover {
+            background: rgba(201, 168, 106, 0.05);
+            transform: translateX(8px);
+        }
+
+        .differential-title {
+            font-size: 1.2rem;
+            color: #C9A86A;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .differential-description {
+            color: #E8DCC4;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .commitment-box {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .commitment-title {
+            font-size: 1.5rem;
+            color: #4CAF50;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .commitment-text {
+            color: #E8DCC4;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .final-statement {
+            background: rgba(201, 168, 106, 0.1);
+            border: 2px solid #C9A86A;
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .final-statement p {
+            font-size: 1.3rem;
+            color: #C9A86A;
+            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: rgba(15, 15, 30, 0.8);
+            border-top: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: #E8DCC4;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .content-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-name">LUMINA</div>
+                    <div class="logo-subtitle">BOOK</div>
+                </div>
+            </div>
+            <a href="biblioteca.html" class="btn-back">← Voltar à Biblioteca</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="page-icon">ℹ️</div>
+            <h1 class="page-title">Sobre a Lumina Books</h1>
+            <p class="page-subtitle">Conhecimento prático em formato premium</p>
+        </div>
+
+        <div class="hero-section">
+            <h2>Quem Somos</h2>
+            <p class="hero-text">
+                A <strong>Lumina Book</strong> é uma editora digital especializada na criação e comercialização de <strong>ebooks premium</strong>, desenvolvidos para o mercado digital moderno.
+            </p>
+            <p class="hero-text">
+                Nosso propósito é <strong>transformar conhecimento prático em experiências de leitura acessíveis, organizadas e confiáveis</strong>, indo além do simples PDF tradicional.
+            </p>
+            <div class="mission-statement">
+                "Acreditamos que conteúdo de qualidade deve respeitar o tempo e a inteligência do leitor"
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2 class="section-title">💎 Nossos Valores</h2>
+            <p style="color: #E8DCC4; opacity: 0.9; margin-bottom: 2rem; line-height: 1.8;">
+                Acreditamos que conteúdo de qualidade deve ser:
+            </p>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <div class="value-title">Claro e Aplicável</div>
+                    <p class="value-text">Informação direta ao ponto, sem enrolação, pronta para ser aplicada na prática.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">📐</div>
+                    <div class="value-title">Bem Estruturado</div>
+                    <p class="value-text">Organização lógica que facilita a compreensão e a consulta rápida.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">✨</div>
+                    <div class="value-title">Esteticamente Agradável</div>
+                    <p class="value-text">Design editorial que torna a leitura uma experiência prazerosa.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⏱️</div>
+                    <div class="value-title">Respeitoso</div>
+                    <p class="value-text">Valoriza o tempo e a inteligência de quem lê, sem conteúdo de enchimento.</p>
+                </div>
+            </div>
+            <p style="color: #E8DCC4; opacity: 0.9; margin-top: 2rem; line-height: 1.8; font-size: 1.05rem;">
+                Por isso, nossos ebooks são pensados como <strong style="color: #C9A86A;">produtos digitais completos</strong>, unindo curadoria de conteúdo, design editorial, experiência de leitura e licenciamento responsável.
+            </p>
+        </div>
+
+        <div class="content-card">
+            <h2 class="section-title">🌟 O que torna um ebook Lumina Book diferente</h2>
+            <ul class="differentials-list">
+                <li class="differential-item">
+                    <div class="differential-title">
+                        <span>📚</span>
+                        Conteúdo prático e direto ao ponto
+                    </div>
+                    <p class="differential-description">
+                        Sem enrolação ou conteúdo de preenchimento. Cada página entrega valor real e aplicável imediatamente.
+                    </p>
+                </li>
+                <li class="differential-item">
+                    <div class="differential-title">
+                        <span>✨</span>
+                        Experiência de leitura premium
+                    </div>
+                    <p class="differential-description">
+                        Design editorial profissional, formatação impecável e navegação intuitiva, disponível em web e/ou PDF.
+                    </p>
+                </li>
+                <li class="differential-item">
+                    <div class="differential-title">
+                        <span>🔐</span>
+                        Licenciamento claro e transparente
+                    </div>
+                    <p class="differential-description">
+                        Você sabe exatamente o que está adquirindo, seus direitos e limitações, sem letras miúdas ou pegadinhas.
+                    </p>
+                </li>
+                <li class="differential-item">
+                    <div class="differential-title">
+                        <span>🔄</span>
+                        Atualizações e melhorias contínuas
+                    </div>
+                    <p class="differential-description">
+                        Nossos ebooks são produtos vivos. Você recebe atualizações e melhorias sem custo adicional.
+                    </p>
+                </li>
+            </ul>
+
+            <div class="commitment-box">
+                <h3 class="commitment-title">
+                    <span>🤝</span>
+                    Compromisso com Ética e Respeito ao Leitor
+                </h3>
+                <p class="commitment-text">
+                    Tratamos nossos leitores como pessoas inteligentes que merecem conteúdo honesto, útil e bem apresentado. Não fazemos promessas exageradas, não vendemos fórmulas mágicas e não enganamos ninguém. Nosso compromisso é com a qualidade, a transparência e o respeito.
+                </p>
+            </div>
+        </div>
+
+        <div class="final-statement">
+            <p>
+                A Lumina Books não vende arquivos soltos.<br>
+                <strong>Vendemos acesso ao conhecimento, de forma legítima, organizada e profissional.</strong>
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <div class="logo-name">LUMINA</div>
+                <div class="logo-subtitle">BOOKS</div>
+            </div>
+        </div>
+        <p>&copy; 2026 Lumina Book. Todos os direitos reservados.</p>
+        <p style="margin-top: 0.5rem;">Conhecimento prático em formato premium</p>
+    </footer>
+
+    <script>
+        // Animação de entrada suave
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('.page-header, .hero-section, .content-card, .final-statement');
+            
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+
+            // Animação dos cards de valores
+            const valueCards = document.querySelectorAll('.value-card');
+            valueCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.9)';
+                card.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                }, 800 + (index * 100));
+            });
+        });
+    </script>
+</body>
+</html>
