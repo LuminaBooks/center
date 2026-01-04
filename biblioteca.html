@@ -670,17 +670,8 @@
         });
 
         // Catálogo de eBooks
-        const catalogo = {
-            "low-carb-ovos": {
-                titulo: "60 Receitas Low Carb com Ovo",
-                descricao: "60 receitas fáceis de fazer para quem treina e precisa de proteína no dia a dia.",
-                capa: "ebooks/low-carb-ovos/Capa Ebook Receitas Low Carb Verde.png",
-                link: "ebooks/low-carb-ovos/index.html",
-                paginas: 120,
-                tempo: 3,
-                novo: true
-            }
-        };
+       const response = await fetch("data/catalogo.json");
+        const catalogo = await response.json();
 
         // Renderizar biblioteca
         const booksGrid = document.getElementById("booksGrid");
@@ -753,4 +744,5 @@
     </script>
 </body>
 </html>
+
 
