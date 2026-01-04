@@ -144,7 +144,7 @@
     msg.style.color = "#ccc";
 
     try {
-      const res = await fetch("dados/acessos.json", { cache: "no-store" });
+      const res = await fetch("data/acessos.json", { cache: "no-store" });
       const data = await res.json();
 
       const usuario = data.usuarios.find(
@@ -169,4 +169,5 @@
 
 </body>
 </html>
+
 
