@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termos de Uso & Licença | Lumina Book</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0F0F1E 0%, #1A1A2E 100%);
+            color: #F5F5F0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            border: 3px solid #C9A86A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            background: rgba(201, 168, 106, 0.1);
+        }
+
+        .logo-icon svg {
+            transform: rotate(-45deg);
+            width: 24px;
+            height: 24px;
+            stroke: #C9A86A;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #E8DCC4;
+            letter-spacing: 0.1em;
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: #C9A86A;
+            font-weight: 500;
+        }
+
+        .btn-back {
+            padding: 0.7rem 1.8rem;
+            background: rgba(201, 168, 106, 0.1);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            color: #C9A86A;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: rgba(201, 168, 106, 0.2);
+            border-color: #C9A86A;
+            transform: translateX(-3px);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #E8DCC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #E8DCC4;
+            opacity: 0.8;
+        }
+
+        .update-info {
+            text-align: center;
+            color: #C9A86A;
+            font-size: 0.9rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .term-section {
+            margin-bottom: 3rem;
+        }
+
+        .term-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #C9A86A 0%, #B89858 100%);
+            color: #1A1A2E;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .term-title {
+            font-size: 1.6rem;
+            color: #C9A86A;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        .term-content {
+            color: #E8DCC4;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            opacity: 0.95;
+        }
+
+        .term-content p {
+            margin-bottom: 1rem;
+        }
+
+        .term-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 1.5rem 0;
+        }
+
+        .term-list li {
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            margin-bottom: 0.8rem;
+            background: rgba(201, 168, 106, 0.05);
+            border-left: 3px solid #C9A86A;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .term-list li::before {
+            content: "•";
+            position: absolute;
+            left: 1rem;
+            color: #C9A86A;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .highlight-box {
+            background: rgba(201, 168, 106, 0.1);
+            border: 2px solid #C9A86A;
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box strong {
+            color: #C9A86A;
+        }
+
+        .warning-box {
+            background: rgba(255, 107, 107, 0.05);
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box p {
+            color: #E8DCC4;
+            margin: 0;
+        }
+
+        .warning-box strong {
+            color: #ff6b6b;
+        }
+
+        .responsibilities-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .responsibilities-list li {
+            padding: 1rem 1rem 1rem 3rem;
+            margin-bottom: 1rem;
+            background: rgba(76, 175, 80, 0.05);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .responsibilities-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 1rem;
+            color: #4CAF50;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .legal-footer {
+            background: linear-gradient(135deg, rgba(201, 168, 106, 0.15) 0%, rgba(201, 168, 106, 0.05) 100%);
+            border: 2px solid #C9A86A;
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .legal-footer-title {
+            font-size: 1.5rem;
+            color: #C9A86A;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .legal-footer-text {
+            font-size: 1.05rem;
+            color: #E8DCC4;
+            line-height: 1.8;
+        }
+
+        .info-box {
+            background: rgba(201, 168, 106, 0.05);
+            border-left: 4px solid #C9A86A;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #E8DCC4;
+            opacity: 0.95;
+        }
+
+        footer {
+            background: rgba(15, 15, 30, 0.8);
+            border-top: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: #E8DCC4;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .content-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .term-title {
+                font-size: 1.3rem;
+            }
+
+            .term-content {
+                font-size: 1rem;
+            }
+
+            main {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-name">LUMINA</div>
+                    <div class="logo-subtitle">BOOK</div>
+                </div>
+            </div>
+            <a href="biblioteca.html" class="btn-back">← Voltar à Biblioteca</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="page-icon">📋</div>
+            <h1 class="page-title">Termos de Uso & Licença</h1>
+            <p class="page-subtitle">Condições de uso dos produtos Lumina Book</p>
+        </div>
+
+        <div class="update-info">
+            📅 Última atualização: Janeiro de 2026
+        </div>
+
+        <div class="content-card">
+            <div class="term-section">
+                <div class="term-number">1</div>
+                <h2 class="term-title">Aceitação dos Termos</h2>
+                <div class="term-content">
+                    <p>
+                        Ao adquirir ou acessar qualquer ebook da <strong>Lumina Book</strong>, o usuário declara que leu, compreendeu e concorda integralmente com estes Termos de Uso e com a Licença de Uso associada ao produto.
+                    </p>
+                    <div class="highlight-box">
+                        <strong>IMPORTANTE:</strong> O acesso ao conteúdo implica aceitação automática destes termos. Caso não concorde com qualquer disposição aqui prevista, não utilize o produto adquirido e entre em contato com nosso suporte.
+                    </div>
+                </div>
+            </div>
+
+            <div class="term-section">
+                <div class="term-number">2</div>
+                <h2 class="term-title">Acesso ao Conteúdo</h2>
+                <div class="term-content">
+                    <p>O acesso aos ebooks pode ocorrer por meio de:</p>
+                    <ul class="term-list">
+                        <li>Plataformas de leitura digital hospedadas pela Lumina Book</li>
+                        <li>Links exclusivos e personalizados enviados ao comprador</li>
+                        <li>Arquivos digitais complementares, quando aplicável ao produto</li>
+                    </ul>
+                    <div class="warning-box">
+                        <p>
+                            <strong>ATENÇÃO:</strong> A Lumina Book reserva-se o direito de alterar, atualizar ou revogar acessos em caso de violação destes termos, sem aviso prévio e sem direito a reembolso.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="term-section">
+                <div class="term-number">3</div>
+                <h2 class="term-title">Uso Permitido</h2>
+                <div class="term-content">
+                    <p>
+                        O conteúdo disponibilizado destina-se <strong>exclusivamente ao uso pessoal do comprador</strong>, sendo vedado qualquer uso coletivo, institucional ou comercial sem autorização expressa da Lumina Book.
+                    </p>
+                    <div class="info-box">
+                        <p>
+                            <strong>Uso Pessoal significa:</strong> Leitura individual, anotações particulares, aplicação do conhecimento em atividades próprias. Você pode ler em múltiplos dispositivos de sua propriedade.
+                        </p>
+                    </div>
+                    <div class="info-box">
+                        <p>
+                            <strong>Uso NÃO Permitido:</strong> Compartilhamento em grupos, distribuição em empresas, uso em cursos ou treinamentos coletivos, revenda ou qualquer forma de comercialização.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="term-section">
+                <div class="term-number">4</div>
+                <h2 class="term-title">Propriedade Intelectual</h2>
+                <div class="term-content">
+                    <p>
+                        Todo o conteúdo, incluindo textos, imagens, estrutura, identidade visual e materiais complementares, é de <strong>propriedade exclusiva da Lumina Book</strong> ou de seus autores licenciados.
+                    </p>
+                    <div class="highlight-box">
+                        <strong>Nenhum direito de propriedade intelectual é transferido ao comprador</strong>, exceto a licença limitada de uso pessoal conforme especificado nestes termos.
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        Todos os direitos não expressamente concedidos nestes termos são reservados à Lumina Book e seus licenciadores.
+                    </p>
+                </div>
+            </div>
+
+            <div class="term-section">
+                <div class="term-number">5</div>
+                <h2 class="term-title">Responsabilidades do Usuário</h2>
+                <div class="term-content">
+                    <p>O usuário compromete-se expressamente a:</p>
+                    <ul class="responsibilities-list">
+                        <li>Não compartilhar o conteúdo adquirido com terceiros, por qualquer meio</li>
+                        <li>Não tentar burlar sistemas de acesso, proteção ou identificação</li>
+                        <li>Não remover identificações, marcas d'água ou avisos legais do conteúdo</li>
+                        <li>Utilizar o conteúdo apenas conforme permitido nestes termos</li>
+                        <li>Manter suas credenciais de acesso seguras e confidenciais</li>
+                    </ul>
+                    <div class="warning-box">
+                        <p>
+                            <strong>IMPORTANTE:</strong> O descumprimento destas responsabilidades pode resultar na suspensão imediata do acesso, sem direito a reembolso, além de medidas legais cabíveis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="term-section">
+                <div class="term-number">6</div>
+                <h2 class="term-title">Atualizações e Modificações</h2>
+                <div class="term-content">
+                    <p>
+                        A Lumina Book pode atualizar estes Termos de Uso e Licença a qualquer momento, visando melhorar a clareza, atender a novas legislações ou adaptar-se a mudanças nos produtos oferecidos.
+                    </p>
+                    <div class="info-box">
+                        <p>
+                            <strong>Recomenda-se a revisão periódica deste documento.</strong> Alterações substanciais serão comunicadas aos usuários por email ou através da plataforma de acesso.
+                        </p>
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        O uso continuado dos produtos após modificações nos termos implica aceitação das alterações realizadas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="term-section">
+                <div class="term-number">7</div>
+                <h2 class="term-title">Legislação Aplicável</h2>
+                <div class="term-content">
+                    <p>
+                        Estes termos são regidos pelas leis da <strong>República Federativa do Brasil</strong>, em especial pela <strong>Lei de Direitos Autorais (Lei nº 9.610/98)</strong>, Código de Defesa do Consumidor (Lei nº 8.078/90) e Marco Civil da Internet (Lei nº 12.965/14).
+                    </p>
+                    <div class="highlight-box">
+                        Quaisquer disputas ou controvérsias oriundas destes termos serão submetidas ao foro da comarca de domicílio do consumidor, conforme determina o Código de Defesa do Consumidor.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legal-footer">
+            <h3 class="legal-footer-title">📞 Dúvidas ou Suporte</h3>
+            <p class="legal-footer-text">
+                Em caso de dúvidas sobre estes termos ou questões relacionadas ao uso dos produtos Lumina Book, entre em contato através do email:<br>
+                <strong style="color: #C9A86A; font-size: 1.1rem; margin-top: 0.5rem; display: inline-block;">suporte@luminabook.com</strong>
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <div class="logo-name">LUMINA</div>
+                <div class="logo-subtitle">BOOK</div>
+            </div>
+        </div>
+        <p>&copy; 2026 Lumina Book. Todos os direitos reservados.</p>
+        <p style="margin-top: 0.5rem;">Documento atualizado em Janeiro de 2026</p>
+    </footer>
+
+    <script>
+        // Animação de entrada suave por seção
+        window.addEventListener('load', () => {
+            const sections = document.querySelectorAll('.term-section');
+            
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'all 0.6s ease';
+                
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+
+            // Animação do header
+            const header = document.querySelector('.page-header');
+            header.style.opacity = '0';
+            header.style.transform = 'scale(0.95)';
+            header.style.transition = 'all 0.8s ease';
+            
+            setTimeout(() => {
+                header.style.opacity = '1';
+                header.style.transform = 'scale(1)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
