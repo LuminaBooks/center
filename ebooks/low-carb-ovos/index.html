@@ -1,204 +1,608 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>60 Receitas Low Carb com Ovo | Lumina Books</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>60 Receitas Low Carb com Ovo | Lumina Books</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- ===== TURN.JS + JQUERY ===== -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0F0F1E 0%, #1A1A2E 100%);
+            color: #F5F5F0;
+            min-height: 100vh;
+        }
 
-<style>
-/* ===== RESET ===== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-/* ===== BASE ===== */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #0F0F1E, #1A1A2E);
-  color: #E8DCC4;
-  min-height: 100vh;
-}
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-/* ===== HEADER ===== */
-header {
-  background: rgba(26,26,46,.95);
-  border-bottom: 1px solid rgba(201,168,106,.2);
-  padding: 1.2rem 2rem;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #C9A86A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            background: rgba(201, 168, 106, 0.1);
+        }
 
-.logo-icon {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #C9A86A;
-  border-radius: 8px;
-  transform: rotate(45deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+        .logo-icon svg {
+            transform: rotate(-45deg);
+            width: 20px;
+            height: 20px;
+            stroke: #C9A86A;
+            fill: none;
+            stroke-width: 2;
+        }
 
-.logo-icon span {
-  transform: rotate(-45deg);
-  color: #C9A86A;
-}
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
 
-.logo-text {
-  display: flex;
-  flex-direction: column;
-}
+        .logo-name {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #E8DCC4;
+            letter-spacing: 0.1em;
+            line-height: 1;
+        }
 
-.logo-name {
-  letter-spacing: .15em;
-  font-size: 1.4rem;
-}
+        .logo-subtitle {
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            color: #C9A86A;
+            font-weight: 500;
+        }
 
-.logo-sub {
-  font-size: .7rem;
-  color: #C9A86A;
-  letter-spacing: .3em;
-}
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-/* ===== LEITOR ===== */
-.reader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 3rem 1rem;
-}
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
 
-#book {
-  width: 900px;
-  height: 520px;
-}
+        .btn-back {
+            background: rgba(201, 168, 106, 0.1);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            color: #C9A86A;
+        }
 
-.page {
-  background: #1A1A2E;
-  border: 1px solid rgba(201,168,106,.25);
-  padding: 2rem;
-}
+        .btn-back:hover {
+            background: rgba(201, 168, 106, 0.2);
+            border-color: #C9A86A;
+        }
 
-.page h2 {
-  color: #C9A86A;
-  margin-bottom: 1rem;
-}
+        .btn-fullscreen {
+            background: linear-gradient(135deg, #C9A86A 0%, #B89858 100%);
+            color: #1A1A2E;
+            font-weight: 600;
+        }
 
-.page p {
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  opacity: .9;
-}
+        .btn-fullscreen:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 168, 106, 0.3);
+        }
 
-/* ===== CONTROLES ===== */
-.controls {
-  margin-top: 2rem;
-  display: flex;
-  gap: 1.5rem;
-}
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
-.controls button {
-  background: rgba(201,168,106,.15);
-  border: 1px solid rgba(201,168,106,.4);
-  color: #C9A86A;
-  padding: .8rem 1.8rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-}
+        .reader-header {
+            margin-bottom: 2rem;
+        }
 
-.controls button:hover {
-  background: rgba(201,168,106,.25);
-}
+        .book-info {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
 
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  #book {
-    width: 100%;
-    height: 460px;
-  }
-}
-</style>
+        .book-cover-thumb {
+            width: 120px;
+            height: 180px;
+            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .book-cover-title {
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .book-cover-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        .book-details h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #C9A86A 0%, #E8DCC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-meta {
+            display: flex;
+            gap: 2rem;
+            color: #E8DCC4;
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .book-description {
+            color: #E8DCC4;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .reader-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(201, 168, 106, 0.2);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .reader-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(201, 168, 106, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .reader-info {
+            color: #C9A86A;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .reader-controls {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .control-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(201, 168, 106, 0.1);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            color: #C9A86A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(201, 168, 106, 0.2);
+            border-color: #C9A86A;
+        }
+
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 70%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .reading-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tip-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 106, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .tip-title {
+            color: #C9A86A;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .tip-text {
+            color: #E8DCC4;
+            opacity: 0.8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .fullscreen-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: #0F0F1E;
+            display: none;
+            flex-direction: column;
+        }
+
+        .fullscreen-mode.active {
+            display: flex;
+        }
+
+        .fullscreen-header {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 168, 106, 0.2);
+        }
+
+        .fullscreen-title {
+            color: #C9A86A;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .fullscreen-content {
+            flex: 1;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        footer {
+            background: rgba(15, 15, 30, 0.8);
+            border-top: 1px solid rgba(201, 168, 106, 0.2);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: #E8DCC4;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .book-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .book-cover-thumb {
+                margin: 0 auto;
+            }
+
+            .book-details h1 {
+                font-size: 1.5rem;
+            }
+
+            .book-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .reader-toolbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .reading-tips {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 1rem;
+            }
+
+            .book-info {
+                padding: 1.5rem;
+            }
+
+            .iframe-wrapper {
+                padding-bottom: 100%;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-name">LUMINA</div>
+                    <div class="logo-subtitle">BOOKS</div>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <a href="biblioteca.html" class="btn btn-back">← Biblioteca</a>
+                <button class="btn btn-fullscreen" id="btnFullscreen">⛶ Modo Tela Cheia</button>
+            </div>
+        </nav>
+    </header>
 
-<header>
-  <div class="logo">
-    <div class="logo-icon"><span>📘</span></div>
-    <div class="logo-text">
-      <div class="logo-name">LUMINA</div>
-      <div class="logo-sub">BOOKS</div>
+    <main>
+        <div class="reader-header">
+            <div class="book-info">
+                <div class="book-cover-thumb">
+                    <div style="text-align: center;">
+                        <div style="color: white; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">LOW CARB</div>
+                        <div class="book-cover-badge">🥚 OVO +</div>
+                    </div>
+                    <div class="book-cover-title">60 RECEITAS</div>
+                </div>
+                <div class="book-details">
+                    <h1>60 Receitas Low Carb com Ovo</h1>
+                    <div class="book-meta">
+                        <span>👤 Daniel Gonçalves</span>
+                        <span>📄 120 páginas</span>
+                        <span>⏱️ 3h leitura</span>
+                    </div>
+                    <p class="book-description">
+                        Guia prático de receitas low carb para quem treina e precisa de proteína no dia a dia sem cair na monotonia. Com 60 preparos simples, rápidos e acessíveis.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="reader-container">
+            <div class="reader-toolbar">
+                <div class="reader-info">📖 Leitor Interativo</div>
+                <div class="reader-controls">
+                    <button class="control-btn" title="Zoom In" id="btnZoomIn">🔍+</button>
+                    <button class="control-btn" title="Zoom Out" id="btnZoomOut">🔍-</button>
+                    <button class="control-btn" title="Tela Cheia" id="btnFullscreenReader">⛶</button>
+                </div>
+            </div>
+            <div class="iframe-wrapper" id="readerWrapper">
+                <iframe 
+                    allowfullscreen="allowfullscreen" 
+                    allow="clipboard-write" 
+                    scrolling="no" 
+                    class="fp-iframe" 
+                    src="https://heyzine.com/flip-book/b4328ab894.html"
+                    id="bookReader"
+                ></iframe>
+            </div>
+        </div>
+
+        <div class="reading-tips">
+            <div class="tip-card">
+                <div class="tip-icon">💡</div>
+                <div class="tip-title">Dica de Leitura</div>
+                <p class="tip-text">Use as setas do teclado ou clique nas bordas para navegar entre as páginas</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">📱</div>
+                <div class="tip-title">Multi-dispositivo</div>
+                <p class="tip-text">Acesse de qualquer lugar: computador, tablet ou smartphone</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🔖</div>
+                <div class="tip-title">Marcadores</div>
+                <p class="tip-text">Clique no ícone de marcador para salvar sua página favorita</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🖨️</div>
+                <div class="tip-title">Impressão</div>
+                <p class="tip-text">Você pode imprimir páginas específicas para consulta rápida</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="fullscreen-mode" id="fullscreenMode">
+        <div class="fullscreen-header">
+            <div class="fullscreen-title">60 Receitas Low Carb com Ovo</div>
+            <button class="btn btn-back" id="btnExitFullscreen">✕ Sair</button>
+        </div>
+        <div class="fullscreen-content">
+            <iframe 
+                allowfullscreen="allowfullscreen" 
+                allow="clipboard-write" 
+                scrolling="no" 
+                src="https://heyzine.com/flip-book/b4328ab894.html"
+                id="bookReaderFullscreen"
+            ></iframe>
+        </div>
     </div>
-  </div>
-</header>
 
-<main class="reader">
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <div class="logo-name">LUMINA</div>
+                <div class="logo-subtitle">BOOKS</div>
+            </div>
+        </div>
+        <p>&copy; 2026 Lumina Book. Todos os direitos reservados.</p>
+        <p style="margin-top: 0.5rem;">Conteúdo protegido • Uso pessoal e intransferível</p>
+    </footer>
 
-  <div id="book">
-    <div class="page">
-      <h2>Introdução</h2>
-      <p>Bem-vindo ao <strong>60 Receitas Low Carb com Ovo</strong>.</p>
-      <p>Este livro foi criado para quem busca praticidade, proteína e sabor.</p>
-    </div>
+    <script>
+        // Fullscreen mode
+        const fullscreenMode = document.getElementById('fullscreenMode');
+        const btnFullscreen = document.getElementById('btnFullscreen');
+        const btnFullscreenReader = document.getElementById('btnFullscreenReader');
+        const btnExitFullscreen = document.getElementById('btnExitFullscreen');
 
-    <div class="page">
-      <h2>Capítulo 1</h2>
-      <p><strong>Ovo Mexido Proteico</strong></p>
-      <p>Ingredientes: ovos, manteiga, sal.</p>
-      <p>Modo de preparo: fogo baixo, mexa lentamente.</p>
-    </div>
+        function enterFullscreen() {
+            fullscreenMode.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-    <div class="page">
-      <h2>Capítulo 2</h2>
-      <p><strong>Omelete Low Carb</strong></p>
-      <p>Ingredientes: ovos, queijo, ervas.</p>
-    </div>
+        function exitFullscreen() {
+            fullscreenMode.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
-    <div class="page">
-      <h2>Capítulo 3</h2>
-      <p><strong>Ovo com Legumes</strong></p>
-      <p>Uma opção nutritiva e rápida.</p>
-    </div>
+        btnFullscreen.addEventListener('click', enterFullscreen);
+        btnFullscreenReader.addEventListener('click', enterFullscreen);
+        btnExitFullscreen.addEventListener('click', exitFullscreen);
 
-    <div class="page">
-      <h2>Encerramento</h2>
-      <p>Obrigado por confiar na Lumina Books.</p>
-      <p>Conhecimento que ilumina.</p>
-    </div>
-  </div>
+        // Fechar fullscreen com ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && fullscreenMode.classList.contains('active')) {
+                exitFullscreen();
+            }
+        });
 
-  <div class="controls">
-    <button onclick="$('#book').turn('previous')">◀ Anterior</button>
-    <button onclick="$('#book').turn('next')">Próxima ▶</button>
-  </div>
+        // Zoom controls (visual feedback apenas)
+        const btnZoomIn = document.getElementById('btnZoomIn');
+        const btnZoomOut = document.getElementById('btnZoomOut');
+        const readerWrapper = document.getElementById('readerWrapper');
 
-</main>
+        let currentZoom = 1;
 
-<script>
-/* ===== PROTEÇÃO DE ACESSO ===== */
-const usuario = JSON.parse(localStorage.getItem("lumina_usuario"));
+        btnZoomIn.addEventListener('click', () => {
+            currentZoom = Math.min(currentZoom + 0.1, 1.5);
+            readerWrapper.style.transform = `scale(${currentZoom})`;
+            readerWrapper.style.transformOrigin = 'center top';
+        });
 
-if (!usuario || !usuario.ebooks || !usuario.ebooks.includes("low-carb-ovos")) {
-  alert("Acesso restrito. Faça login.");
-  window.location.href = "../../index.html";
-}
+        btnZoomOut.addEventListener('click', () => {
+            currentZoom = Math.max(currentZoom - 0.1, 0.8);
+            readerWrapper.style.transform = `scale(${currentZoom})`;
+            readerWrapper.style.transformOrigin = 'center top';
+        });
 
-/* ===== TURN.JS INIT ===== */
-$('#book').turn({
-  width: 900,
-  height: 520,
-  autoCenter: true,
-  gradients: true,
-  acceleration: true
-});
-</script>
-
+        // Animação de entrada
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('.book-info, .reader-container, .tip-card');
+            
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>
