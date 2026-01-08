@@ -5,6 +5,9 @@
       "ativo": true,
       "titulo": "50 Receitas Low Carb com Ovo",
       "autor": "Henrique Ribeiro",
-    "img":"https://cdn.jsdelivr.net/gh/LuminaBooks/center@main/ebooks/low-carb-ovos/Capa%20Ebook%20Receitas%20Low%20Carb%20Verde.png"
+      "img":"https://cdn.jsdelivr.net/gh/LuminaBooks/center@main/ebooks/low-carb-ovos/Capa%20Ebook%20Receitas%20Low%20Carb%20Verde.png",
+      "descricao": "Guia prático de receitas low carb para quem treina e precisa de proteína no dia a dia sem cair na monotonia. Com 50 preparos simples, rápidos e acessíveis.",
+      "paginas": 72,
+      "leiturahoraria": "5 horas"
     }
   }
