@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>60 Receitas Low Carb com Ovo | Lumina Books</title>
+    <title>50 Receitas Low Carb com Ovo | Lumina Books</title>
     <style>
         * {
             margin: 0;
@@ -416,6 +417,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -432,27 +434,27 @@
                 </div>
             </div>
             <div class="nav-actions">
-                <a href="https://luminabooks.github.io/center/biblioteca.html" class="btn btn-back">← Biblioteca</a>
+                <a href=https://luminabooks.github.io/center/biblioteca.html class="btn btn-back">← Biblioteca</a>
                 <button class="btn btn-fullscreen" id="btnFullscreen">⛶ Modo Tela Cheia</button>
             </div>
         </nav>
     </header>
 
     <main>
-       <div class="reader-header">
+        <div class="reader-header">
             <div class="book-info">
                 <div class="book-cover-thumb">
-                  <img src="https://luminabooks.github.io/center/ebooks/low-carb-ovos/Capa%20Ebook%20Receitas%20Low%20Carb%20Verde.png" alt="capa do livro">
+                    <img src="{{img}}" alt="capa do livro">
                 </div>
                 <div class="book-details">
-                    <h1>50 Receitas Low Carb com Ovo</h1>
+                    <h1>{{titulo}}</h1>
                     <div class="book-meta">
-                        <span>👤 Henrique Ribeiro </span>
-                        <span>📄 120 páginas</span>
-                        <span>⏱️ 3h leitura</span>
+                        <span>👤 {{autor}}</span>
+                        <span>📄 {{paginas}} páginas</span>
+                        <span>⏱️ {{leiturahoraria}}</span>
                     </div>
                     <p class="book-description">
-                        Guia prático de receitas low carb para quem treina e precisa de proteína no dia a dia sem cair na monotonia. Com 50 preparos simples, rápidos e acessíveis.
+                    <div>{{descricao}}</div>
                     </p>
                 </div>
             </div>
@@ -468,33 +470,22 @@
                 </div>
             </div>
             <div class="iframe-wrapper" id="readerWrapper">
-                <iframe 
-                    allowfullscreen="allowfullscreen" 
-                    allow="clipboard-write" 
-                    scrolling="no" 
-                    class="fp-iframe" 
-                    src="https://heyzine.com/flip-book/af91b7b4c1.html"
-                    id="bookReader"
-                ></iframe>
+                <iframe allowfullscreen="allowfullscreen" allow="clipboard-write" scrolling="no" class="fp-iframe"
+                    src="{{leitorUrl}}" id="bookReader"></iframe>
             </div>
         </div>
 
-      
+
     </main>
 
     <div class="fullscreen-mode" id="fullscreenMode">
         <div class="fullscreen-header">
-            <div class="fullscreen-title">50 Receitas Low Carb com Ovo</div>
+            <div class="fullscreen-title">{{titulo}}</div>
             <button class="btn btn-back" id="btnExitFullscreen">✕ Sair</button>
         </div>
         <div class="fullscreen-content">
-            <iframe 
-                allowfullscreen="allowfullscreen" 
-                allow="clipboard-write" 
-                scrolling="no" 
-                src="https://heyzine.com/flip-book/b4328ab894.html"
-                id="bookReaderFullscreen"
-            ></iframe>
+            <iframe allowfullscreen="allowfullscreen" allow="clipboard-write" scrolling="no"
+                src="{{leitorUrl}}" id="bookReaderFullscreen"></iframe>
         </div>
     </div>
 
@@ -516,231 +507,211 @@
     </footer>
 
     <script>
-        /* 🔒 SISTEMA DE BLOQUEIO DE ACESSO - LUMINA BOOKS */
-        
-        // Configuração do eBook
-        const EBOOK_CONFIG = {
-            id: "low-carb-ovos",
-            titulo: "50 Receitas Low Carb com Ovo",
-            urlLogin: "index.html",
-            urlBiblioteca: "biblioteca.html"
-        };
+        /* =============================
+           CONFIGURAÇÕES
+        ============================= */
+        const JSON_URL = "https://cdn.jsdelivr.net/gh/LuminaBooks/center@main/data/ebooks-config.json";
 
-        // Função para verificar acesso
+        /* =============================
+           INICIALIZAÇÃO GERAL
+        ============================= */
+        document.body.style.display = "none";
+
+        async function initPage() {
+            try {
+                const response = await fetch(JSON_URL);
+                const json = await response.json();
+
+                if (!json || !json.ebooks) {
+                    throw new Error("JSON inválido ou estrutura incorreta");
+                }
+
+                // Configuração global do eBook
+                window.EBOOK_CONFIG = json.ebooks;
+
+                // Renderizar placeholders
+                renderTemplate(EBOOK_CONFIG);
+
+                // Verificar acesso
+                if (!verificarAcesso()) return;
+
+                // Liberar página
+                document.body.style.display = "block";
+
+            } catch (err) {
+                console.error("Erro crítico:", err);
+                alert("Erro ao carregar o conteúdo.");
+            }
+        }
+
+        /* =============================
+           TEMPLATE ENGINE {{ }}
+        ============================= */
+        function renderTemplate(data) {
+            document.querySelectorAll("*").forEach(el => {
+
+                // Substituir texto
+                el.childNodes.forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        node.textContent = node.textContent.replace(/\{\{(.*?)\}\}/g, (_, key) => {
+                            return data[key.trim()] ?? "";
+                        });
+                    }
+                });
+
+                // Substituir atributos
+                [...el.attributes].forEach(attr => {
+                    if (attr.value.includes("{{")) {
+                        attr.value = attr.value.replace(/\{\{(.*?)\}\}/g, (_, key) => {
+                            return data[key.trim()] ?? "";
+                        });
+                    }
+                });
+            });
+        }
+
+        /* =============================
+           VERIFICAÇÃO DE ACESSO
+        ============================= */
         function verificarAcesso() {
             try {
-                // Verificar se existe usuário no localStorage
+                if (!window.EBOOK_CONFIG) {
+                    console.error("EBOOK_CONFIG não carregado");
+                    return false;
+                }
+
                 const usuarioStr = localStorage.getItem("lumina_usuario");
-                
+
                 if (!usuarioStr) {
-                    console.warn("Acesso negado: Usuário não autenticado");
                     redirecionarParaLogin("Você precisa fazer login para acessar este conteúdo.");
                     return false;
                 }
 
-                // Parse do objeto usuário
                 let usuario;
                 try {
                     usuario = JSON.parse(usuarioStr);
-                } catch (e) {
-                    console.error("Erro ao processar dados do usuário:", e);
+                } catch {
                     localStorage.removeItem("lumina_usuario");
-                    redirecionarParaLogin("Erro nos dados de acesso. Por favor, faça login novamente.");
+                    redirecionarParaLogin("Erro nos dados de acesso. Faça login novamente.");
                     return false;
                 }
 
-                // Validar estrutura do objeto usuário
-                if (!usuario || typeof usuario !== 'object') {
-                    console.warn("Acesso negado: Dados de usuário inválidos");
-                    localStorage.removeItem("lumina_usuario");
-                    redirecionarParaLogin("Dados de acesso inválidos. Faça login novamente.");
+                if (!usuario.email || !Array.isArray(usuario.ebooks)) {
+                    redirecionarParaLogin("Dados inválidos. Faça login novamente.");
                     return false;
                 }
 
-                // Verificar email do usuário
-                if (!usuario.email || typeof usuario.email !== 'string' || usuario.email.trim() === '') {
-                    console.warn("Acesso negado: Email não encontrado");
-                    localStorage.removeItem("lumina_usuario");
-                    redirecionarParaLogin("Email não identificado. Faça login novamente.");
-                    return false;
-                }
-
-                // Verificar se possui lista de ebooks
-                if (!Array.isArray(usuario.ebooks)) {
-                    console.warn("Acesso negado: Lista de eBooks inválida");
-                    redirecionarParaBiblioteca("Você não possui eBooks vinculados à sua conta.");
-                    return false;
-                }
-
-                // Verificar se o usuário tem acesso a este eBook específico
-                if (!usuario.ebooks.includes(EBOOK_CONFIG.id)) {
-                    console.warn(`Acesso negado: eBook "${EBOOK_CONFIG.id}" não autorizado para ${usuario.email}`);
+                if (!usuario.ebooks.includes(EBOOK_CONFIG["id-do-ebook"])) {
                     redirecionarParaBiblioteca(`Você não possui acesso ao eBook "${EBOOK_CONFIG.titulo}".`);
                     return false;
                 }
 
-                // Acesso autorizado
-                console.log(`Acesso autorizado: ${usuario.email} -> ${EBOOK_CONFIG.id}`);
                 exibirMensagemSucesso(usuario.email);
                 return true;
 
             } catch (erro) {
                 console.error("Erro crítico ao verificar acesso:", erro);
-                redirecionarParaLogin("Erro ao verificar permissões. Tente novamente.");
+                redirecionarParaLogin("Erro ao verificar permissões.");
                 return false;
             }
         }
 
-        // Função para redirecionar para login
+        /* =============================
+           REDIRECIONAMENTOS
+        ============================= */
         function redirecionarParaLogin(mensagem) {
             if (mensagem) {
-                sessionStorage.setItem('lumina_mensagem_acesso', mensagem);
+                sessionStorage.setItem("lumina_mensagem_acesso", mensagem);
             }
-            
-            // Pequeno delay para permitir que o console log seja visível
             setTimeout(() => {
-                window.location.href = EBOOK_CONFIG.urlLogin;
+                window.location.href = EBOOK_CONFIG.urlLogin || "/login.html";
             }, 100);
         }
 
-        // Função para redirecionar para biblioteca
         function redirecionarParaBiblioteca(mensagem) {
             alert(mensagem);
-            
             setTimeout(() => {
-                window.location.href = EBOOK_CONFIG.urlBiblioteca;
+                window.location.href = EBOOK_CONFIG.urlBiblioteca || "/biblioteca.html";
             }, 100);
         }
 
-        // Função para exibir mensagem de sucesso (opcional)
+        /* =============================
+           NOTIFICAÇÃO DE SUCESSO
+        ============================= */
         function exibirMensagemSucesso(email) {
-            // Criar notificação discreta de acesso autorizado
-            const notificacao = document.createElement('div');
+            const notificacao = document.createElement("div");
             notificacao.style.cssText = `
-                position: fixed;
-                top: 80px;
-                right: 20px;
-                background: rgba(76, 175, 80, 0.95);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 8px;
-                font-size: 0.9rem;
-                z-index: 10000;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                animation: slideIn 0.3s ease;
-            `;
-            notificacao.innerHTML = `✓ Acesso autorizado para ${email.split('@')[0]}`;
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: rgba(76,175,80,0.95);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  `;
+            notificacao.innerHTML = `✓ Acesso autorizado para ${email.split("@")[0]}`;
             document.body.appendChild(notificacao);
 
-            // Remover após 3 segundos
-            setTimeout(() => {
-                notificacao.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notificacao.remove(), 300);
-            }, 3000);
+            setTimeout(() => notificacao.remove(), 3000);
         }
 
-        // Adicionar animações CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(400px); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(400px); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+        /* =============================
+           PROTEÇÕES ADICIONAIS
+        ============================= */
 
-        // Executar verificação IMEDIATAMENTE ao carregar o script
-        if (!verificarAcesso()) {
-            // Se a verificação falhar, bloquear a exibição do conteúdo
-            document.addEventListener('DOMContentLoaded', () => {
-                document.body.style.display = 'none';
-            });
-        }
-
-        // Proteção adicional: verificar periodicamente se o usuário ainda está autenticado
+        // Sessão expirada
         setInterval(() => {
-            const usuarioAtual = localStorage.getItem("lumina_usuario");
-            if (!usuarioAtual) {
-                console.warn("Sessão perdida - redirecionando para login");
-                redirecionarParaLogin("Sua sessão expirou. Faça login novamente.");
+            if (!localStorage.getItem("lumina_usuario")) {
+                redirecionarParaLogin("Sua sessão expirou.");
             }
-        }, 30000); // Verifica a cada 30 segundos
+        }, 30000);
 
-        // Proteção contra manipulação do localStorage
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'lumina_usuario' && !e.newValue) {
-                console.warn("Dados de usuário removidos - redirecionando");
-                redirecionarParaLogin("Acesso removido. Faça login novamente.");
+        // Manipulação do localStorage
+        window.addEventListener("storage", e => {
+            if (e.key === "lumina_usuario" && !e.newValue) {
+                redirecionarParaLogin("Acesso removido.");
             }
         });
 
-        /* FIM DO BLOQUEIO DE ACESSO */
+        /* =============================
+           FULLSCREEN E ZOOM
+        ============================= */
+        const fullscreenMode = document.getElementById("fullscreenMode");
+        const btnFullscreen = document.getElementById("btnFullscreen");
+        const btnFullscreenReader = document.getElementById("btnFullscreenReader");
+        const btnExitFullscreen = document.getElementById("btnExitFullscreen");
 
-        // Fullscreen mode
-        const fullscreenMode = document.getElementById('fullscreenMode');
-        const btnFullscreen = document.getElementById('btnFullscreen');
-        const btnFullscreenReader = document.getElementById('btnFullscreenReader');
-        const btnExitFullscreen = document.getElementById('btnExitFullscreen');
+        btnFullscreen?.addEventListener("click", () => {
+            fullscreenMode.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
 
-        function enterFullscreen() {
-            fullscreenMode.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+        btnFullscreenReader?.addEventListener("click", () => {
+            fullscreenMode.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
 
-        function exitFullscreen() {
-            fullscreenMode.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+        btnExitFullscreen?.addEventListener("click", () => {
+            fullscreenMode.classList.remove("active");
+            document.body.style.overflow = "auto";
+        });
 
-        btnFullscreen.addEventListener('click', enterFullscreen);
-        btnFullscreenReader.addEventListener('click', enterFullscreen);
-        btnExitFullscreen.addEventListener('click', exitFullscreen);
-
-        // Fechar fullscreen com ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && fullscreenMode.classList.contains('active')) {
-                exitFullscreen();
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") {
+                fullscreenMode.classList.remove("active");
+                document.body.style.overflow = "auto";
             }
         });
 
-        // Zoom controls (visual feedback apenas)
-        const btnZoomIn = document.getElementById('btnZoomIn');
-        const btnZoomOut = document.getElementById('btnZoomOut');
-        const readerWrapper = document.getElementById('readerWrapper');
-
-        let currentZoom = 1;
-
-        btnZoomIn.addEventListener('click', () => {
-            currentZoom = Math.min(currentZoom + 0.1, 1.5);
-            readerWrapper.style.transform = `scale(${currentZoom})`;
-            readerWrapper.style.transformOrigin = 'center top';
-        });
-
-        btnZoomOut.addEventListener('click', () => {
-            currentZoom = Math.max(currentZoom - 0.1, 0.8);
-            readerWrapper.style.transform = `scale(${currentZoom})`;
-            readerWrapper.style.transformOrigin = 'center top';
-        });
-
-        // Animação de entrada
-        window.addEventListener('load', () => {
-            const elements = document.querySelectorAll('.book-info, .reader-container, .tip-card');
-            
-            elements.forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'all 0.6s ease';
-                
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        });
+        /* =============================
+           START
+        ============================= */
+        initPage();
     </script>
+
 </body>
+
 </html>
