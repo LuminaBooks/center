@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Biblioteca | Lumina Books</title>
+    <title>Minha Biblioteca | Lumina Book</title>
     <style>
         * {
             margin: 0;
@@ -528,7 +527,6 @@
         }
     </style>
 </head>
-
 <body>
     <header>
         <nav>
@@ -541,7 +539,7 @@
                 </div>
                 <div class="logo-text">
                     <div class="logo-name">LUMINA</div>
-                    <div class="logo-subtitle">BOOKS</div>
+                    <div class="logo-subtitle">BOOK</div>
                 </div>
             </div>
             <div class="user-info">
@@ -561,8 +559,8 @@
         </nav>
         <div class="mobile-menu" id="mobileMenu">
             <div class="user-email" id="userEmailMobile"></div>
-            <a href="licenca.html">📜 Licença Oficial Lumina Books</a>
-            <a href="sobre.html">ℹ️ Sobre a Lumina Books</a>
+            <a href="licenca.html">📜 Licença Oficial Lumina Book</a>
+            <a href="sobre.html">ℹ️ Sobre a Lumina Book</a>
             <a href="termos.html">📋 Termos de Uso & Licença</a>
         </div>
     </header>
@@ -615,189 +613,220 @@
             </div>
             <div class="logo-text">
                 <div class="logo-name">LUMINA</div>
-                <div class="logo-subtitle">BOOKS</div>
+                <div class="logo-subtitle">BOOK</div>
             </div>
         </div>
-        <p>&copy; 2026 Lumina Book. Conhecimento que ilumina. Todos os direitos reservados.</p>
+        <p>&copy; 2026 Lumina Book. Todos os direitos reservados.</p>
         <p style="margin-top: 0.5rem; font-size: 0.8rem;">Acesso pessoal e intransferível</p>
     </footer>
 
     <script>
-        /* =============================
-           CONFIGURAÇÕES
-        ============================= */
-        const JSON_URL = "https://cdn.jsdelivr.net/gh/LuminaBooks/center@main/data/ebooks-config.json";
+        /* 🔒 SISTEMA DE AUTENTICAÇÃO E BIBLIOTECA */
+        
+        // Configuração
+        const CONFIG = {
+            jsonUrl: "data/ebooks-config.json", // Altere para o caminho correto
+            urlLogin: "index.html"
+        };
 
-        /* =============================
-           BLOQUEIO INICIAL
-        ============================= */
+        // Bloquear exibição inicial (anti-flash)
         document.body.style.display = "none";
 
-        /* =============================
-           AUTENTICAÇÃO
-        ============================= */
-        function verificarLogin() {
-            const usuarioStr = localStorage.getItem("lumina_usuario");
-            if (!usuarioStr) {
-                window.location.href = "index.html";
-                return null;
-            }
+        // Verificar autenticação
+        const usuario = JSON.parse(localStorage.getItem("lumina_usuario"));
 
-            try {
-                return JSON.parse(usuarioStr);
-            } catch {
-                localStorage.removeItem("lumina_usuario");
-                window.location.href = "index.html";
-                return null;
-            }
+        if (!usuario) {
+            window.location.href = CONFIG.urlLogin;
         }
 
-        /* =============================
-           TEMPLATE ENGINE {{ }}
-        ============================= */
-        function renderTemplate(data) {
-            document.querySelectorAll("*").forEach(el => {
+        // Configurar informações do usuário
+        document.getElementById("userEmail").innerText = usuario.email;
+        document.getElementById("userEmailMobile").innerText = usuario.email;
+        
+        const firstName = usuario.email.split('@')[0];
+        document.getElementById("welcomeTitle").innerText = `Bem-vindo de volta, ${firstName}!`;
 
-                // Texto
-                el.childNodes.forEach(node => {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        node.textContent = node.textContent.replace(/\{\{(.*?)\}\}/g, (_, key) => {
-                            return data[key.trim()] ?? "";
-                        });
-                    }
-                });
+        // Menu toggle mobile
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
 
-                // Atributos
-                [...el.attributes].forEach(attr => {
-                    if (attr.value.includes("{{")) {
-                        attr.value = attr.value.replace(/\{\{(.*?)\}\}/g, (_, key) => {
-                            return data[key.trim()] ?? "";
-                        });
-                    }
-                });
+        menuToggle.addEventListener("click", () => {
+            menuToggle.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+        });
+
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove("active");
+                mobileMenu.classList.remove("active");
             });
-        }
+        });
 
-        /* =============================
-           INICIALIZAÇÃO DA PÁGINA
-        ============================= */
-        async function initBiblioteca() {
-            const usuario = verificarLogin();
-            if (!usuario) return;
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+                menuToggle.classList.remove("active");
+                mobileMenu.classList.remove("active");
+            }
+        });
 
+        // Logout
+        document.getElementById("btnLogout").addEventListener("click", (e) => {
+            e.preventDefault();
+            if (confirm("Deseja realmente sair?")) {
+                localStorage.removeItem("lumina_usuario");
+                window.location.href = CONFIG.urlLogin;
+            }
+        });
+
+        // Carregar e renderizar biblioteca
+        async function carregarBiblioteca() {
             try {
-                const response = await fetch(JSON_URL);
-                const json = await response.json();
+                console.log('📚 Carregando biblioteca...');
+                
+                // Buscar configuração dos eBooks
+                const response = await fetch(CONFIG.jsonUrl, { 
+                    cache: "no-store",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-                if (!json || !json.ebooks) {
-                    throw new Error("JSON inválido");
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
                 }
 
-                // Configuração global
-                window.EBOOK_CONFIG = json.ebooks;
+                const data = await response.json();
+                console.log('✓ Dados carregados:', data);
 
-                // Dados do usuário no HTML
-                preencherUsuario(usuario);
+                if (!data || !data.ebooks) {
+                    throw new Error('Estrutura JSON inválida');
+                }
 
-                // Renderizar placeholders globais
-                renderTemplate(EBOOK_CONFIG);
+                const catalogo = data.ebooks;
+                renderizarBiblioteca(catalogo);
 
-                // Renderizar biblioteca
-                renderizarBiblioteca(usuario, EBOOK_CONFIG);
-
-                // Liberar tela
+                // Liberar visualização
                 document.body.style.display = "block";
 
-            } catch (err) {
-                console.error("Erro ao carregar biblioteca:", err);
-                alert("Erro ao carregar biblioteca.");
+            } catch (erro) {
+                console.error('❌ Erro ao carregar biblioteca:', erro);
+                alert('Erro ao carregar sua biblioteca. Por favor, tente novamente.');
+                document.body.style.display = "block";
             }
         }
 
-        /* =============================
-           USUÁRIO NO HEADER
-        ============================= */
-        function preencherUsuario(usuario) {
-            const firstName = usuario.email.split("@")[0];
-
-            document.getElementById("userEmail")?.innerText = usuario.email;
-            document.getElementById("userEmailMobile")?.innerText = usuario.email;
-            document.getElementById("welcomeTitle")?.innerText =
-                `Bem-vindo de volta, ${firstName}!`;
-        }
-
-        /* =============================
-           RENDERIZAÇÃO DA BIBLIOTECA
-        ============================= */
-        function renderizarBiblioteca(usuario, ebook) {
+        // Renderizar biblioteca
+        function renderizarBiblioteca(catalogo) {
             const booksGrid = document.getElementById("booksGrid");
             const emptyState = document.getElementById("emptyState");
             const bookCount = document.getElementById("bookCount");
 
-            if (!usuario.ebooks || usuario.ebooks.length === 0) {
+            // Limpar grid
+            booksGrid.innerHTML = "";
+
+            // Verificar se o usuário tem eBooks
+            if (!usuario.ebooks || !Array.isArray(usuario.ebooks) || usuario.ebooks.length === 0) {
+                console.warn('⚠️ Usuário sem eBooks');
                 booksGrid.style.display = "none";
                 emptyState.style.display = "block";
                 bookCount.textContent = "0";
                 return;
             }
 
+            console.log('📖 eBooks do usuário:', usuario.ebooks);
+
             let totalPages = 0;
+            let totalTime = 0;
+            let ebooksRenderizados = 0;
 
             usuario.ebooks.forEach(id => {
-                if (ebook-confg["id-do-ebook"] !== id) return;
+                const livro = catalogo[id];
+                
+                if (!livro) {
+                    console.warn(`⚠️ eBook não encontrado no catálogo: ${id}`);
+                    return;
+                }
 
-                totalPages += ebook.paginas || 0;
+                if (livro.ativo === false) {
+                    console.warn(`⚠️ eBook inativo: ${id}`);
+                    return;
+                }
 
+                console.log(`✓ Renderizando: ${livro.titulo}`);
+
+                // Calcular estatísticas
+                totalPages += livro.paginas || 0;
+                
+                // Extrair número de horas do formato "3h"
+                const horasMatch = livro.leiturahoraria?.match(/(\d+)/);
+                if (horasMatch) {
+                    totalTime += parseInt(horasMatch[1]);
+                }
+
+                // Criar card do livro
                 const card = document.createElement("div");
                 card.className = "book-card";
 
                 card.innerHTML = `
-      <div class="book-cover">
-        <img src="${ebook.img}" alt="${ebook.titulo}">
-        <div class="book-overlay">
-          <a href="${ebook.leitorUrl}" class="btn-read">📖 Ler Agora</a>
-        </div>
-      </div>
-      <div class="book-info">
-        <h3 class="book-title">${ebook.titulo}</h3>
-        <p class="book-description">${ebook.descricao}</p>
-        <div class="book-meta">
-          <span>📄 ${ebook.paginas} páginas</span>
-          <span>⏱️ ${ebook.leiturahoraria}</span>
-        </div>
-      </div>
-    `;
+                    ${livro.novo ? '<div class="badge-new">NOVO</div>' : ''}
+                    <div class="book-cover">
+                        <img src="${livro.img}" alt="${livro.titulo}" onerror="this.style.display='none'">
+                        <div class="book-overlay">
+                            <a href="${livro.leitorUrl}" class="btn-read">📖 Ler Agora</a>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${livro.titulo}</h3>
+                        <p class="book-description">${livro.descricao}</p>
+                        <div class="book-meta">
+                            <span>📄 ${livro.paginas} páginas</span>
+                            <span>⏱️ ${livro.leiturahoraria}</span>
+                        </div>
+                    </div>
+                `;
 
                 booksGrid.appendChild(card);
+                ebooksRenderizados++;
             });
 
-            bookCount.textContent = usuario.ebooks.length;
-            document.getElementById("totalBooks")?.textContent = usuario.ebooks.length;
-            document.getElementById("totalPages")?.textContent = totalPages;
+            // Atualizar contadores
+            bookCount.textContent = ebooksRenderizados;
+            document.getElementById("totalBooks").textContent = ebooksRenderizados;
+            document.getElementById("totalPages").textContent = totalPages;
+            document.getElementById("readingTime").textContent = totalTime;
+
+            console.log(`✓ ${ebooksRenderizados} eBook(s) renderizado(s)`);
+
+            // Mostrar estado vazio se nenhum livro foi renderizado
+            if (ebooksRenderizados === 0) {
+                booksGrid.style.display = "none";
+                emptyState.style.display = "block";
+            }
         }
 
-        /* =============================
-           MENU MOBILE + LOGOUT
-        ============================= */
-        document.getElementById("menuToggle")?.addEventListener("click", () => {
-            document.getElementById("menuToggle").classList.toggle("active");
-            document.getElementById("mobileMenu").classList.toggle("active");
+        // Animação de entrada
+        window.addEventListener('load', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.book-card, .stat-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
         });
 
-        document.getElementById("btnLogout")?.addEventListener("click", e => {
-            e.preventDefault();
-            if (confirm("Deseja realmente sair?")) {
-                localStorage.removeItem("lumina_usuario");
-                window.location.href = "index.html";
-            }
-        });
-
-        /* =============================
-           START
-        ============================= */
-        initBiblioteca();
+        // Iniciar carregamento
+        carregarBiblioteca();
     </script>
-
 </body>
-
 </html>
