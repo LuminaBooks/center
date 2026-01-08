@@ -1,10 +1,9 @@
 {
-  "ebooks": "50 Receitas Low Carb com Ovo",
+  "ebooks":{
     "id-do-ebook": "low-carb-ovos",
       "leitorUrl": "https://heyzine.com/flip-book/af91b7b4c1.html",
       "ativo": true,
-      "titulo": "...",
-      "autor": "..."
+      "titulo": "50 Receitas Low Carb com Ovo"
+      "autor": "Henrique Ribeiro"
     }
   }
-}
