@@ -2,7 +2,7 @@
   "usuarios": [
     {
       "email": "teste@email.com",
-      "ebooks": ["low-carb-ovos"]
+      "ebooks": ["low-carb-ovos","low-carb-ovos2","low-carb-ovos3"]
     },
     {
       "email": "cliente@outlook.com",
