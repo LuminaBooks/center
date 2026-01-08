@@ -621,22 +621,11 @@
     </footer>
 
     <script>
-        /* 🔒 SISTEMA DE AUTENTICAÇÃO E BIBLIOTECA */
-        
-        // Configuração
-        const CONFIG = {
-            jsonUrl: "data/ebooks-config.json", // Altere para o caminho correto
-            urlLogin: "index.html"
-        };
-
-        // Bloquear exibição inicial (anti-flash)
-        document.body.style.display = "none";
-
         // Verificar autenticação
         const usuario = JSON.parse(localStorage.getItem("lumina_usuario"));
 
         if (!usuario) {
-            window.location.href = CONFIG.urlLogin;
+            window.location.href = "index.html";
         }
 
         // Configurar informações do usuário
@@ -676,157 +665,92 @@
             e.preventDefault();
             if (confirm("Deseja realmente sair?")) {
                 localStorage.removeItem("lumina_usuario");
-                window.location.href = CONFIG.urlLogin;
+                window.location.href = "index.html";
             }
         });
 
-        // Carregar e renderizar biblioteca
-        async function carregarBiblioteca() {
-            try {
-                console.log('📚 Carregando biblioteca...');
-                
-                // Buscar configuração dos eBooks
-                const response = await fetch(CONFIG.jsonUrl, { 
-                    cache: "no-store",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Erro HTTP: ${response.status}`);
-                }
-
-                const data = await response.json();
-                console.log('✓ Dados carregados:', data);
-
-                if (!data || !data.ebooks) {
-                    throw new Error('Estrutura JSON inválida');
-                }
-
-                const catalogo = data.ebooks;
-                renderizarBiblioteca(catalogo);
-
-                // Liberar visualização
-                document.body.style.display = "block";
-
-            } catch (erro) {
-                console.error('❌ Erro ao carregar biblioteca:', erro);
-                alert('Erro ao carregar sua biblioteca. Por favor, tente novamente.');
-                document.body.style.display = "block";
+        // Catálogo de eBooks
+        const catalogo = {
+            "low-carb-ovos": {
+                titulo: "60 Receitas Low Carb com Ovo",
+                descricao: "60 receitas fáceis de fazer para quem treina e precisa de proteína no dia a dia.",
+                capa: "ebooks/low-carb-ovos/Capa Ebook Receitas Low Carb Verde.png",
+                link: "ebooks/low-carb-ovos/index.html",
+                paginas: 120,
+                tempo: 3,
+                novo: true
             }
-        }
+        };
 
         // Renderizar biblioteca
-        function renderizarBiblioteca(catalogo) {
-            const booksGrid = document.getElementById("booksGrid");
-            const emptyState = document.getElementById("emptyState");
-            const bookCount = document.getElementById("bookCount");
+        const booksGrid = document.getElementById("booksGrid");
+        const emptyState = document.getElementById("emptyState");
+        const bookCount = document.getElementById("bookCount");
 
-            // Limpar grid
-            booksGrid.innerHTML = "";
-
-            // Verificar se o usuário tem eBooks
-            if (!usuario.ebooks || !Array.isArray(usuario.ebooks) || usuario.ebooks.length === 0) {
-                console.warn('⚠️ Usuário sem eBooks');
-                booksGrid.style.display = "none";
-                emptyState.style.display = "block";
-                bookCount.textContent = "0";
-                return;
-            }
-
-            console.log('📖 eBooks do usuário:', usuario.ebooks);
-
+        if (!usuario.ebooks || usuario.ebooks.length === 0) {
+            booksGrid.style.display = "none";
+            emptyState.style.display = "block";
+            bookCount.textContent = "0";
+        } else {
             let totalPages = 0;
             let totalTime = 0;
-            let ebooksRenderizados = 0;
 
             usuario.ebooks.forEach(id => {
+                if (!catalogo[id]) return;
+
                 const livro = catalogo[id];
-                
-                if (!livro) {
-                    console.warn(`⚠️ eBook não encontrado no catálogo: ${id}`);
-                    return;
-                }
-
-                if (livro.ativo === false) {
-                    console.warn(`⚠️ eBook inativo: ${id}`);
-                    return;
-                }
-
-                console.log(`✓ Renderizando: ${livro.titulo}`);
-
-                // Calcular estatísticas
                 totalPages += livro.paginas || 0;
-                
-                // Extrair número de horas do formato "3h"
-                const horasMatch = livro.leiturahoraria?.match(/(\d+)/);
-                if (horasMatch) {
-                    totalTime += parseInt(horasMatch[1]);
-                }
+                totalTime += livro.tempo || 0;
 
-                // Criar card do livro
                 const card = document.createElement("div");
                 card.className = "book-card";
 
                 card.innerHTML = `
                     ${livro.novo ? '<div class="badge-new">NOVO</div>' : ''}
                     <div class="book-cover">
-                        <img src="${livro.img}" alt="${livro.titulo}" onerror="this.style.display='none'">
+                        <img src="${livro.capa}" alt="${livro.titulo}" onerror="this.style.display='none'">
                         <div class="book-overlay">
-                            <a href="${livro.leitorUrl}" class="btn-read">📖 Ler Agora</a>
+                            <a href="${livro.link}" class="btn-read">📖 Ler Agora</a>
+                            <a href="${livro.capa}" download class="btn-download">⬇️ Download</a>
                         </div>
                     </div>
                     <div class="book-info">
                         <h3 class="book-title">${livro.titulo}</h3>
                         <p class="book-description">${livro.descricao}</p>
                         <div class="book-meta">
-                            <span>📄 ${livro.paginas} páginas</span>
-                            <span>⏱️ ${livro.leiturahoraria}</span>
+                            <span>📄 ${livro.paginas || 'N/A'} páginas</span>
+                            <span>⏱️ ${livro.tempo || 'N/A'}h leitura</span>
                         </div>
                     </div>
                 `;
 
                 booksGrid.appendChild(card);
-                ebooksRenderizados++;
             });
 
-            // Atualizar contadores
-            bookCount.textContent = ebooksRenderizados;
-            document.getElementById("totalBooks").textContent = ebooksRenderizados;
+            // Atualizar estatísticas
+            document.getElementById("totalBooks").textContent = usuario.ebooks.length;
             document.getElementById("totalPages").textContent = totalPages;
             document.getElementById("readingTime").textContent = totalTime;
-
-            console.log(`✓ ${ebooksRenderizados} eBook(s) renderizado(s)`);
-
-            // Mostrar estado vazio se nenhum livro foi renderizado
-            if (ebooksRenderizados === 0) {
-                booksGrid.style.display = "none";
-                emptyState.style.display = "block";
-            }
+            bookCount.textContent = usuario.ebooks.length;
         }
 
         // Animação de entrada
-        window.addEventListener('load', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.book-card, .stat-card').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'all 0.6s ease';
-                observer.observe(el);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
             });
-        });
+        }, { threshold: 0.1 });
 
-        // Iniciar carregamento
-        carregarBiblioteca();
+        document.querySelectorAll('.book-card, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
+
