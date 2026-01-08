@@ -634,6 +634,8 @@
         
         const firstName = usuario.email.split('@')[0];
         document.getElementById("welcomeTitle").innerText = `Bem-vindo de volta, ${firstName}!`;
+        const firstName2 = usuario.email.split('@')[0];
+        document.getElementById("userEmail").innerText = `${firstName}`;
 
         // Menu toggle mobile
         const menuToggle = document.getElementById("menuToggle");
@@ -753,4 +755,5 @@
     </script>
 </body>
 </html>
+
 
